@@ -23,7 +23,7 @@ function moveposts_info()
 		"website"			=> "http://galaxiesrealm.com/index.php",
 		"author"			=> "Starpaul20",
 		"authorsite"		=> "http://galaxiesrealm.com/index.php",
-		"version"			=> "1.1",
+		"version"			=> "1.1.1",
 		"guid"				=> "c8142214157b9470bdad92ad24658683",
 		"compatibility"		=> "16*"
 	);
@@ -89,7 +89,7 @@ function moveposts_deactivate()
 // Move posts - Inline moderation tool
 function moveposts_run()
 {
-	global $db, $mybb, $lang, $templates, $theme, $headerinclude, $header, $footer, $loginbox, $inlineids;
+	global $db, $mybb, $lang, $templates, $theme, $headerinclude, $header, $footer, $loginbox, $inlineids, $parser;
 	$lang->load("moveposts");
 
 	if($mybb->input['action'] != "multimoveposts" && $mybb->input['action'] != "do_multimoveposts")
@@ -108,6 +108,8 @@ function moveposts_run()
 
 	$tid = intval($mybb->input['tid']);
 	$thread = get_thread($tid);
+
+	$thread['subject'] = htmlspecialchars_uni($parser->parse_badwords($thread['subject'])); 
 
 	if($mybb->input['action'] == "multimoveposts" && $mybb->request_method == "post")
 	{
@@ -131,7 +133,7 @@ function moveposts_run()
 		{
 			error($lang->error_inline_nopostsselected);
 		}
-		
+
 		if(!is_moderator_by_pids($posts, "canmanagethreads"))
 		{
 			error_no_permission();
@@ -427,7 +429,6 @@ function move_posts($pids, $movetid)
 				}
 				++$forum_counters[$newtid['fid']]['posts'];
 			}
-
 		}
 		elseif($post['visible'] == 0)
 		{
