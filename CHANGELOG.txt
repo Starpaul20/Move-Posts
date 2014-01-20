@@ -1,0 +1,9 @@
+1.1.1
+- Bug: Fixed possible XSS issue with thread titles
+
+1.1
+- Added support for Google SEO URLs
+- Optimization and general plugin updating
+
+1.0
+- Initial release
