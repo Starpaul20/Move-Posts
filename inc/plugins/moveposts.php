@@ -375,6 +375,12 @@ function move_posts($pids, $movetid)
 	);
 	$db->update_query("posts", $sqlarray, "pid IN ($pids_list)");
 
+	$sqlarray = array(
+		"tid" => $newtid['tid'],
+		"fid" => $newtid['fid']
+	);
+	$db->update_query("reportedposts", $sqlarray, "pid IN ($pids_list)");
+
 	// Get posts being moved
 	while($post = $db->fetch_array($original_posts_query))
 	{
