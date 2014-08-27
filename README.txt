@@ -1,3 +1,5 @@
+DEPRECATED! Feature has been added in MyBB 1.8.
+
 ## INFORMATION ##
 
 Move Posts (1.1.1) for MyBB 1.6
